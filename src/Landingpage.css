@@ -1,0 +1,12 @@
+/* Landingpage.css */
+
+.landingpage-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .page-space {
+    height: 30px; /* Adjust the height to add space between pages */
+  }
+  

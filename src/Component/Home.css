@@ -1,0 +1,53 @@
+/* Home.css */
+
+.home-container {
+    background-image: url('https://png.pngtree.com/background/20211215/original/pngtree-indonesia-independence-day-festival-celebration-red-and-white-flag-doodle-picture-image_1453036.jpg');
+    background-size: cover;
+    background-position: center;
+    color: #ec1532;
+    height: 25vh;
+    width:100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .search-input {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    margin-top: 20px;
+  }
+  
+  .search-input div {
+    margin-right: 10px;
+  }
+  
+  /* Update the color of the label to black */
+  label {
+    margin-right: 5px;
+    color: #000;
+  }
+  
+  /* Adjust the width of the input to make it wider */
+  .search-input input {
+    width: 100%;
+    margin-right: 10px;
+  }
+  
+  button {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .error-message {
+    color: #dc3545;
+    margin-top: 10px;
+  }
+  
