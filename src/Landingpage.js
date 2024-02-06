@@ -4,6 +4,7 @@ import Slide from './Slide';
 import About from './About';
 import './Landingpage.css'; // Create a separate CSS file for styling
 import Contactus from './Contactus';
+import ImageComponent from './ImageComponent';
 
 function Landingpage() {
 
@@ -19,7 +20,10 @@ function Landingpage() {
       <br></br><br></br>
       <div className="page-space"></div> {/* Adjust the height as needed */}
       <About />
-      <br></br><br></br>
+      <br></br><br></br><br/>
+      <div className="page-space"></div> {/* Adjust the height as needed */}
+      <ImageComponent />
+      <br></br>
       <div className="page-space"></div>
       <Contactus />
     </div>

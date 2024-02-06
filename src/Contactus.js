@@ -6,7 +6,7 @@ import './Contactus.css'; // Create a separate CSS file for styling
 const Contactus = () => {
   return (
     <div className="contact-us-container">
-      <h1>Contact Us</h1>
+      <h1 style={{textAlign : "center"}}>Contact Us</h1>
       <hr className="divider" />
       <div className="contact-details">
         <p>

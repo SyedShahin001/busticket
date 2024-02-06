@@ -5,7 +5,8 @@ import Card from 'react-bootstrap/Card';
 import { FaBus } from 'react-icons/fa';
 import { FaCalendarCheck } from 'react-icons/fa';
 import { FaMoneyBillAlt } from 'react-icons/fa';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom'; 
+// import Home from './Home';
 
 const BusDetails = () => {
   const location = useLocation();
@@ -36,7 +37,8 @@ const BusDetails = () => {
   };
 
   return (
-    <>
+    <> 
+    {/* <Home /> */}
       {searchResults && searchResults.length > 0 ? (
         searchResults.map((bus) => (
           <Card key={bus.id} border="primary" className="mx-auto" style={{ margin: '10px', maxWidth: '70vw', cursor: 'pointer', height: 'fit-content' }} onClick={() => handleBusClick(bus.busId, bus.source, bus.destination, bus.fare, bus.seatPrice)}>

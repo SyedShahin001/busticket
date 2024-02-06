@@ -19,6 +19,8 @@ import BookingDetails from './Component/BookingDetails';
 import AddBus from './AddBus';
 import BusDetailsCard from './Component/BusDetailsCard';
 import UpdateForm from './Component/UpdateForm';
+import Booking from './Booking';
+import ImageComponent from './ImageComponent';
 // import PdfDocument from './Component/PdfDocument';
 
 
@@ -51,6 +53,9 @@ function App() {
         <Route path='/UpdateForm/:busId' element={<UpdateForm />} />
         <Route path='/AddBus' element={<AddBus/>}/>
         {/* <Route path='/PdfDocument' element={<PdfDocument/>}/> */}
+        <Route path='/bookings' element={<Booking/> }  />
+        <Route path='/ImageComponent' element={<ImageComponent/> }  />
+        
 
         
         

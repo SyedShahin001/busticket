@@ -4,6 +4,7 @@ import { FaRupeeSign } from 'react-icons/fa';
 import { CLIENT_ID } from '../Config/Config';
 import React, { useState, useEffect } from 'react';
 import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
+import emailjs from '@emailjs/browser'
 
 const PaymentPage = () => {
   const location = useLocation();
@@ -13,6 +14,8 @@ const PaymentPage = () => {
   const [ErrorMessage, setErrorMessage] = useState('');
   const [orderID, setOrderID] = useState(false);
   const navigate = useNavigate();
+  const email = localStorage.getItem("email");
+  const name = localStorage.getItem("name");
 
   const createOrder = (data, actions) => {
     return actions.order.create({
@@ -40,6 +43,8 @@ const PaymentPage = () => {
   const onError = (data, actions) => {
     setErrorMessage('An Error occurred with your payment');
   };
+
+  
 
 
   const handleProceedToPay = async () => {
@@ -80,6 +85,23 @@ const PaymentPage = () => {
       alert('Payment successful!!');
       console.log('Order successful. Your order id is--', orderID);
       navigate('/Paymentsuccess');
+      const serviceId = "service_navsav5";
+      const templateId = "template_n68mdz9";
+      const publicKey = "4XVtb_PHYibbHtazg";
+    console.log(email);
+    const templateParams = {
+      from_name :"Shahin(Admin)",
+      to_email:email,
+      to_name: name,
+      message: `Hi, Your booking details are as follows:\nSource: ${source}\nDestination: ${destination}\nFare: ${fare}\nSelected Seats: ${selectedSeats.join(', ')}\nTotal Fare: ${totalFair}\n\nThank you for booking with us!`,
+    };
+    emailjs.send(serviceId,templateId,templateParams,publicKey)
+    .then(()=>{
+      alert("Email sent successfully");
+    })
+    .catch((emailerror)=>{
+alert("Error in sending email");
+    });
     }
   }, [success]);
 
@@ -97,15 +119,18 @@ const PaymentPage = () => {
             {fare} <br />
           </p>
           <p>
-            <b>Selected Seats:</b> {selectedSeats.join(', ')} <br />
+            <b>Selected Seat Numbers:</b> {selectedSeats.join(', ')} <br />
             <b>Total Fare:</b> <FaRupeeSign />
             {totalFair} <br />
           </p>
         </div>
 
-        <button className='buy-btn' type="submit" onClick={handleProceedToPay} style={{ display: 'block', margin: '0 auto' }}>
-  Proceed to Pay
-</button>
+        <div style={{ display: 'flex', justifyContent: 'center', gap: '10px' }}>
+  <button className='buy-btn' type="submit" onClick={handleProceedToPay}>Proceed to Pay</button>
+  <button className='btn-danger' onClick={() => navigate("/Landingpage")}>Cancel to Pay</button>
+</div>
+
+
 
 <br></br>
 

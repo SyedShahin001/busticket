@@ -8,7 +8,7 @@
   
   .image-slider {
     width: 200%; /* Adjust the width of the image slider */
-    max-width: 900px; /* Maximum width for responsiveness */
+    max-width: 800px; /* Maximum width for responsiveness */
   }
   
   .image-slider img {

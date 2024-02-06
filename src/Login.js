@@ -86,7 +86,8 @@ function LoginForm() {
           setisLoggedIn(true);
          
           navigate('/Landingpage');
-          window.location.reload();
+          window.location.reload(); 
+          
           setLoggedIn(true);
           toast.success("Login Sucessfull");
          

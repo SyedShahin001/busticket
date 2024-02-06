@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate ,NavLink} from 'react-router-dom';
 import { CgProfile } from "react-icons/cg";
 
 const Navbar = () => {
@@ -21,7 +21,8 @@ const Navbar = () => {
   };
 
   return (
-    <>
+    <> 
+    {/* Customer navbar */}
   { role==="Customer" ? <nav className="navbar navbar-expand-lg navbar-light" style={{ backgroundColor: '#dc3545' }}>
   <div className="container">
     {/* Display the RedBus logo on the left */}
@@ -38,8 +39,14 @@ const Navbar = () => {
                 
                 
                 <li className="nav-item">
-                  <Link to="/Landingpage" className="nav-link" style={{ color: 'white' }}>
+                  <Link to="/Landingpage" className="nav-link " style={{ color: 'white' }}>
                     Home
+                  </Link>
+                </li>
+                
+                <li className="nav-item">
+                  <Link to="/bookings"  className="nav-link" style={{ color: 'white' }}>
+                    My Bookings
                   </Link>
                 </li>
                 <li className="nav-item">
@@ -57,17 +64,17 @@ const Navbar = () => {
             {!isLoggedIn && (
               <>
               <li className="nav-item">
-                  <Link to="/Landingpage" className="nav-link" style={{ color: 'white' }}>
+                  <Link to="/Landingpage" className="nav-link active" activeClassName="active" style={{ color: 'white' }}>
                     Home
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link to="/Signup" className="nav-link" style={{ color: 'white' }}>
+                  <Link to="/Signup" className="nav-link" activeClassName="active" style={{ color: 'white' }}>
                     Signup
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link to="/Login" className="nav-link" style={{ color: 'white' }}>
+                  <Link to="/Login" className="nav-link" activeClassName="active" style={{ color: 'white' }}>
                     Login
                   </Link>
                 </li>

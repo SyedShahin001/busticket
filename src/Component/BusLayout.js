@@ -61,7 +61,9 @@ const BusLayout = () => {
   <div className="bus-seat-layout">
     &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
     &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
-    &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;<GiSteeringWheel /> <br/><br/>
+    &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;<GiSteeringWheel />  
+
+    <h5>________________________</h5>
     {Array.from({ length: totalRows }, (_, rowIndex) => (
       <div key={rowIndex} className="bus-layout-row">
         {Array.from({ length: seatsPerRow }, (_, seatIndex) => {
@@ -113,10 +115,11 @@ const BusLayout = () => {
          <b>Fare: </b>  <FaRupeeSign/>{fare}<br />
         </p>
         <p><b>Selected Seats:</b> {selectedSeats.join(', ')}</p>
-        <p><b>Total Fare: </b> <FaRupeeSign/>{totalFair}</p>
+        <p><b>Total Fare: </b> <FaRupeeSign/>{totalFair}</p> 
+        {selectedSeats.length!==0 ? 
         <button onClick={() => navigate('/PaymentPage', { state: { busid,source, destination, fare, selectedSeats, totalFair } })}>
   Book Now
-</button>
+</button> : <h1></h1>}
       </div>
     </div>
   );

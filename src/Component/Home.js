@@ -66,7 +66,7 @@ const Home = () => {
         <input
           type="text"
           id="from"
-          value={from}
+          value={from} 
           onChange={(e) => setFrom(e.target.value)}
           className={errorFields.includes('from') ? 'error' : ''}
         />
