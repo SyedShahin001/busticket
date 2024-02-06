@@ -7,12 +7,12 @@
   }
   
   .image-slider {
-    width: 100%; /* Adjust the width of the image slider */
-    max-width: 800px; /* Maximum width for responsiveness */
+    width: 200%; /* Adjust the width of the image slider */
+    max-width: 900px; /* Maximum width for responsiveness */
   }
   
   .image-slider img {
     width: 100%; /* Make images fill their container */
     height: auto; /* Maintain aspect ratio */
   }
-  
+   

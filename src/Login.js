@@ -1,99 +1,271 @@
-import React, { useState } from 'react';
-import { MDBBtn, MDBContainer, MDBCard, MDBCardBody, MDBCardImage, MDBRow, MDBCol, MDBInput, MDBCheckbox, MDBIcon } from 'mdb-react-ui-kit';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
+import LoginIcon from '@material-ui/icons/AccountCircle';
+import { Button } from '@material-ui/core';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import './Login.css';
+import {
+  MDBContainer,
+  MDBRow,
+  MDBCol,
+  MDBCard,
+  MDBCardBody,
+  MDBInput,
+} from 'mdb-react-ui-kit';
 
-function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+function LoginForm() {
+  const [email, setemail] = useState('');
+  const [password, setpassword] = useState('');
   const navigate = useNavigate();
+  const [isLoggedIn, setisLoggedIn] = useState(true);
+  const [errorMsg, seterrorMsg] = useState('');
+  const [errorMsg1, seterrorMsg1] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
 
-  const containerStyles = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: '80vw',
-    fontFamily: 'Roboto, sans-serif',
-    color: '#fff',
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword);
   };
+   
+    const encodedpassword = encodeURIComponent(password);
 
-  async function login(e) {
-    e.preventDefault();
-
-    try {
-      let item = { email, password };
-
+    useEffect(()=>{
+      fetchData();
+    })
+ 
+    async function login() {
       localStorage.setItem('email', email);
-
-      let result = await fetch(`https://localhost:7127/api/Login?email=${email}&password=${encodeURIComponent(password)}`, {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(item),
-      });
-
-      result = await result.json();
-
-      console.log(result);
-
-      localStorage.setItem('token', result);
-
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-      if (result !== 'unAuthorized' && email !== '' && password !== '') {
-        toast.success('Login Successful');
-        navigate('/Landingpage');
-      } else if (!emailRegex.test(email) && email !== '') {
-        toast.error('Email Format is invalid');
-      } else if (email === '' || password === '') {
-        toast.warning('Please fill all fields');
-      } else {
-        toast.error('Login Unsuccessful');
-        toast.error('Invalid Email or Password');
+      localStorage.setItem('password', password);
+      console.warn({ email, password });
+ 
+     
+     
+ 
+      try {
+        let item = { email, password };
+        let result = await fetch(`https://localhost:7127/api/Login?email=${email}&password=${encodeURIComponent(password)}`, {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(item),
+        });
+        result = await result.json();
+        localStorage.setItem('result',result);
+        localStorage.setItem('par', result.token);
+        localStorage.setItem("role",result.role);
+        localStorage.setItem("Title",result.title)
+        console.log(result);
+       console.log(result.title);
+        console.log(result.role);
+        console.log(isLoggedIn);
+       
+        let item2 = { email, password };
+        let result1 = await fetch(`https://localhost:7127/api/Login/GetName?email=${email}&password=${encodedpassword}
+        `, {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(item2),
+        });
+        result1 = await result1.json();
+        console.log(result1); 
+        //localStorage.setItem('hex',result1);
+        localStorage.setItem('name', result1.firstName);
+        localStorage.setItem('signupid',result1.signupId);
+        console.log(`Global name is ${result1.firstName}`);
+        console.log(localStorage.getItem('name').length);
+        
+ 
+        if (result.title !== 'Unauthorized' && result.status!==400) {
+          localStorage.setItem('r',"Authorized");
+          setisLoggedIn(true);
+         
+          navigate('/Landingpage');
+          window.location.reload();
+          setLoggedIn(true);
+          toast.success("Login Sucessfull");
+         
+         
+          Notify1();
+        } else {
+          console.log('User not found');
+          setisLoggedIn(false);
+          setLoggedIn(false);
+          Notify();
+       
+        }
+      } catch (error) {
+        console.log(error);
       }
-    } catch (error) {
-      console.error(error);
+      console.log(loggedIn);
+      localStorage.setItem("log",isLoggedIn);
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        setisLoggedIn(false);
+        seterrorMsg('Please Enter a Email Address in Valid format');
+        toast.error("Please enter an email address in valid format");
+        return false;
+      }
+ 
+      try {
+        if (email === '') {
+          setisLoggedIn(true);
+          seterrorMsg('Please Enter An Email');
+          return false;
+        }
+        seterrorMsg('');
+        return true;
+      } catch (error) {
+        console.log(error);
+      }
+    } 
+ 
+    // const fetchData = async () => {
+     
+    //   const response = await fetch(`https://localhost:7131/api/Signup/GetSignupIdByEmail?email=${email}`,{
+       
+    //   });
+    //   const jsonData = await response.json();
+    //   console.log(jsonData);
+    //   localStorage.setItem("CustomerId",jsonData)
+     
+     
+ 
+    // };
+    const fetchData = async () => {
+      try{
+      const response = await fetch(`https://localhost:7127/api/Signups/GetIdbyEmail?email=${email}`,{
+       
+      });
+      const jsonData = await response.json();
+      console.log(jsonData);
+      localStorage.setItem("CustomerId",jsonData)
     }
-
-    setEmail('');
-    setPassword('');
-  }
-
+    catch(error)
+    {
+      console.log(error);
+    }
+     
+     
+ 
+    };
+    function validate() {
+      try {
+        if (password === '') {
+          setisLoggedIn(true);
+          seterrorMsg1('Please Enter A Password');
+          return false;
+        }
+        seterrorMsg1('');
+        return true;
+      } catch (error) {
+        console.log(error);
+      }
+    }
+ 
+    const Notify = () => {
+      toast.error('Login Unsuccessful');
+    };
+    const Notify1 = () => {
+      toast.success('Login Successful');
+    };
+ 
+    const handleBoth = () => {
+      login();
+      validate();
+     
+    };
   return (
-    <MDBContainer fluid>
-      <MDBRow>
-        <MDBCol sm='6'>
-          <div className='d-flex flex-row ps-5 pt-5'>
-            <MDBIcon fas icon="crow fa-3x me-3" style={{ color: '#709085' }}/>
-            <span className="h1 fw-bold mb-0">Logo</span>
-          </div>
-
-          <div className='d-flex flex-column justify-content-center h-custom-2 w-75 pt-4'>
-            <h3 className="fw-normal mb-3 ps-5 pb-3" style={{ letterSpacing: '1px' }}>Log in</h3>
-            <MDBInput wrapperClass='mb-4 mx-5 w-100' label='Email address' id='formControlLg' type='email' size="lg" value={email} onChange={(e) => setEmail(e.target.value)} />
-            <MDBInput wrapperClass='mb-4 mx-5 w-100' label='Password' id='formControlLg' type='password' size="lg" value={password} onChange={(e) => setPassword(e.target.value)} />
-            <button className="mb-4 px-5 mx-5 w-100" color='info' size='lg' onClick={login}>
-              Login
-            </button>
-            <p className='ms-5'>Don't have an account? <a href="Signup" className="link-info">Register here</a></p>
-          </div>
-        </MDBCol>
-
-        <MDBCol sm='6' className='d-none d-sm-block px-0'>
-          <MDBCard style={{ width: '100%' }}>
-            <MDBCardImage src='https://coachbuildersindia.com/wp-content/uploads/2024/01/RedBus-Report-2023.webp' alt='Login image' className='w-100' style={{ objectFit: 'cover', objectPosition: 'left' }} />
+    <div
+      style={{
+        backgroundImage: 'url("https://media.istockphoto.com/id/879364174/photo/white-bus-traveling-on-the-asphalt-road-in-a-rural-landscape-at-sunset.jpg?s=612x612&w=0&k=20&c=AVMWs0BDjp3lEOfhOvnp2PPwBsmPBoZUhCpEG51KjVg=")',
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center center',
+        minHeight: '100vh',
+      }}
+    >
+    <MDBContainer fluid style={{  minHeight: '100vh' }}>
+      <ToastContainer
+position="top-right"
+autoClose={2000}
+hideProgressBar={false}
+newestOnTop={false}
+closeOnClick
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover
+theme="dark"
+ 
+/>
+      <MDBRow className='d-flex justify-content-center align-items-center h-100'>
+        <MDBCol sm='12' md='6' lg='4'>
+          <MDBCard className='bg-white my-5' style={{ borderRadius: '1rem', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
+            <MDBCardBody className='p-5'>
+              <h2 className='fw-bold mb-4 text-center'>Login</h2>
+              <p className='text-white-50 mb-4 text-center'>Please enter your login and password!</p>
+              <h5>Email Address</h5>
+              <MDBInput wrapperClass='mb-4' value={email} onChange={(e) => setemail(e.target.value)} type='email' size='lg' />
+              {errorMsg ? <p style={{ color: 'red' }}>{errorMsg}</p> : ''}
+              <h5>Password</h5>
+              <div style={{ position: 'relative' }}>
+                <MDBInput
+                  wrapperClass='mb-4'
+                  value={password}
+                  onChange={(e) => setpassword(e.target.value)}
+                  type={showPassword ? 'text' : 'password'}
+                  size='lg'
+                />
+                <Button
+                  type='Button'
+                  onClick={toggleShowPassword}
+                  style={{
+                    position: 'absolute',
+                    top: '50%',
+                    right: '10px',
+                    transform: 'translateY(-50%)',
+                    border: 'none',
+                    background: 'transparent',
+                    cursor: 'pointer',
+                  }}
+                >
+                  {showPassword ? <FaEye /> : <FaEyeSlash />}
+                </Button>
+              </div>
+              {errorMsg1 ? <p style={{ color: 'red' }}>{errorMsg1}</p> : ''}
+              <Button
+                startIcon={<LoginIcon />}
+                onClick={handleBoth}
+               
+                color='primary'
+                variant='contained'
+                fullWidth
+                style={{ marginTop: '1rem' }}
+              >
+                Login
+              </Button>
+              {isLoggedIn ? null : (
+                <p style={{ fontWeight: 'bold', color: 'red', textAlign: 'center', marginTop: '1rem' }}>
+                  Email or Password is Incorrect
+                </p>
+              )}
+              <p className='text-center mt-4'>
+                New User? <a href='/Signup'>Create Account</a>
+              </p>
+              <ToastContainer />
+            </MDBCardBody>
           </MDBCard>
         </MDBCol>
       </MDBRow>
-
-      <ToastContainer />
     </MDBContainer>
-  );
+    </div>
+  )
 }
-
-export default Login;
+ 
+export default LoginForm

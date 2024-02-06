@@ -6,7 +6,7 @@
   margin-left: 20vw;
   justify-content: center;
   align-items: center;
-  margin-top: 9vh;
+  margin-top: 2vh;
 }
 
 .left-side {
@@ -19,14 +19,20 @@
   gap: 10px;
   flex-wrap: wrap; /* Enable wrapping for horizontal layout */
 }
+.left-side {
+  flex: 1;
+  padding: 20px;
+  border: 2px solid #0d0d0e; /* Added border property to left-side class */ 
+  margin-right: 100px;
+}
 
 .bus-layout-seat {
-  width: 90px; /* Adjusted width for horizontal layout */
-  height: 60px; /* Adjusted height for horizontal layout */
+  width: 40px; /* Adjusted width for horizontal layout */
+  height: 80px; /* Adjusted height for horizontal layout */
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 2px solid #3498db;
+  border: 2px solid #131413;
   border-radius: 8px;
   cursor: pointer;
   font-weight: bold;
@@ -34,20 +40,86 @@
   transition: background-color 0.3s, border-color 0.3s;
   margin: 5px;
 }
+.indication-marks {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end; /* Align to the right side */
+  margin-left: 20px; /* Adjust as needed */
+}
 
+.indication-mark {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.selected {
+  background-color: #57992b;
+  color: #fff;
+  padding: 6px;
+  border: 2px solid #0a0a0a;
+}
+
+.blocked {
+  background-color: #dcdcdc;
+  color: #777;
+  padding: 5px;
+  border: 2px solid #0d0e0d;
+}
+.available{
+  background-color: #fcfafa;
+  color: #181717;
+  padding: 5px;
+  border: 2px solid #0c0c0c;
+}
+.square {
+  width: 20px; /* Adjust as needed */
+  height: 20px; /* Adjust as needed */
+  margin-right: 10px;
+}
+
+.selected { background-color: #2f9c25; }
+.blocked { background-color: #dcdcdc; }
+.available { background-color: #f6f8f6; }
+
+.text {
+  font-size: 14px; /* Adjust as needed */
+}
+
+.left-side {
+  display: flex;
+}
+
+.bus-seat-layout {
+  flex: 1;
+}
+
+.seat-indications {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 20px; /* Adjust as needed */
+  margin-top: 150px;
+  margin-right: 100px;
+}
 .bus-layout-seat.selected {
-  background-color: #3498db;
+  background-color: #6bc03b;
   color: #fff;
 }
 
-.bus-layout-seat:not(.selected):not(.occupied):hover {
+.bus-layout-seat.blocked {
+  background-color: #dcdcdc; /* Light gray shade for blocked seats */
+  color: #0e0d0d; /* Darker gray text color for blocked seats */
+}
+
+.bus-layout-seat:not(.selected):not(.blocked):hover {
   background-color: #ecf0f1;
 }
 
 .right-side {
   flex: 1;
-  padding: 20px;
-  background-color: #fff;
+  padding: 10px;
+  background-color:white;
 }
 
 .right-side p {

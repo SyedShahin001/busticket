@@ -15,11 +15,11 @@ function Landingpage() {
       <Home />
       
       <div className="page-space"></div> {/* Adjust the height as needed */}
-      <Slide /> <br />
+      <Slide /> <br /><br />
       <br></br><br></br>
       <div className="page-space"></div> {/* Adjust the height as needed */}
       <About />
-      <br></br><br></br><br></br>
+      <br></br><br></br>
       <div className="page-space"></div>
       <Contactus />
     </div>
