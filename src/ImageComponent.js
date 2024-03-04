@@ -16,8 +16,15 @@ const ImagesComponent = () => {
     }
   ];
 
+  const containerStyle = {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    marginTop: '50px', // Adjust as needed
+  };
+
   return (
-    <div>
+    <div style={containerStyle}>
       {images.map((image, index) => (
         <div key={index}>
           <img

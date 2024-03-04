@@ -14,7 +14,7 @@ function Booking() {
     const fetchBookings = async () => {
         try {
             const uid=localStorage.getItem('signupid');
-            const response = await axios.get(`https://localhost:7127/api/Bookings/mybookings?id=${uid}`);
+            const response = await axios.get(`http://localhost:88/api/Bookings/mybookings?id=${uid}`);
             // Assuming the response data is an array of bookings
             setBookings(response.data);
             // Fetch bus details for each booking
@@ -33,7 +33,7 @@ function Booking() {
 
     const fetchBusDetails = async (busId) => {
         try {
-            const response = await axios.get(`https://localhost:7127/api/Buses/${busId}`);
+            const response = await axios.get(`http://localhost:88/api/Buses/${busId}`);
             // Assuming the response data contains source and destination
             const { source, destination } = response.data;
             return { source, destination };
@@ -57,6 +57,8 @@ function Booking() {
                         <p>Number of Seats: {booking.numberOfSeats}</p>
                         <p>Total Fare: ${booking.totalFare}</p>
                         <p>Status: {booking.status}</p>
+
+                        {/* <p><strong>Status:</strong> <span style={{ color: booking.status === 'completed' ? 'orange' : (booking.status === 'booked' ? 'blue' : 'inherit')}}>{booking.status}</span></p> */}
                         {busDetails[booking.busId] && (
                             <>
                                 <p>Source: {busDetails[booking.busId].source}</p>

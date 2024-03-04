@@ -10,7 +10,7 @@ const BusDetailsCard = () => {
   const [filteredBusNames, setFilteredBusNames] = useState([]);
 
   useEffect(() => {
-    fetch('https://localhost:7127/api/Buses')
+    fetch('http://localhost:88/api/Buses')
       .then(response => response.json())
       .then(data => {
         setOriginalBusDetails(data);
@@ -35,17 +35,14 @@ const BusDetailsCard = () => {
   };
 
   const handleSearchClick = () => {
-    // Filter the busDetails array based on the entered criteria
     const filteredBuses = originalBusDetails.filter(bus => {
-      const matchesCategory = bus.category.toLowerCase().includes(searchCategory.toLowerCase());
-      const matchesBusName = bus.busName.toLowerCase().includes(searchBusName.toLowerCase());
+      const matchesCategory = !searchCategory || bus.category.toLowerCase() === searchCategory.toLowerCase();
+      const matchesBusName = !searchBusName || bus.busName.toLowerCase().includes(searchBusName.toLowerCase());
       return matchesCategory && matchesBusName;
     });
-
-    // Update the state with the filtered buses
     setBusDetails(filteredBuses);
   };
-
+  
   return (
     <div style={pageContainerStyle}>
       <div style={searchBarStyle}>

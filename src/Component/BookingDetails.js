@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
+
 const BookingDetails = () => {
   const [bookings, setBookings] = useState([]);
   const [filteredBookings, setFilteredBookings] = useState([]);
@@ -10,7 +11,7 @@ const BookingDetails = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('https://localhost:7127/api/Bookings');
+        const response = await axios.get('http://localhost:88/api/Bookings');
         setBookings(response.data);
       } catch (error) {
         setError(error.message);
@@ -50,7 +51,9 @@ const BookingDetails = () => {
               <p><strong>Booking Time:</strong> {new Date(booking.bookingTime).toLocaleString()}</p>
               <p><strong>Number of Seats:</strong> {booking.noOfSeats}</p>
               <p><strong>Total Fare:</strong> {booking.totalFare}</p>
-              <p><strong>Status:</strong> {booking.status}</p>
+
+         
+              <p><strong>Status:</strong> <span style={{ color: booking.status === 'completed' ? 'orange' : (booking.status === 'booked' ? 'green' : 'inherit')}}>{booking.status}</span></p>
             </div>
           ))}
         </div>
@@ -79,6 +82,7 @@ const cardContainerStyle = {
 
 const cardStyle = {
   width: '30%',  // Adjust card width to fit three cards in a row
+  minWidth: '300px', // Set minimum width for consistent card size
   boxSizing: 'border-box',
   border: '1px solid #ddd',
   padding: '20px',

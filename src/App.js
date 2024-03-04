@@ -21,16 +21,20 @@ import BusDetailsCard from './Component/BusDetailsCard';
 import UpdateForm from './Component/UpdateForm';
 import Booking from './Booking';
 import ImageComponent from './ImageComponent';
-// import PdfDocument from './Component/PdfDocument';
+import GoogleMap from './Component/GoogleMap';
+import Receipts from './Component/Receipts';
+import UpdatePasswordForm from './Password/UpdatePasswordForm';
+import UserDetails from './Password/UserDetails';
+
 
 
 
 
 function App() {
-
+const role = localStorage.getItem("role");
   return (
     
-    <Router>
+    <Router> 
   <Navbar/>
       <Routes>
 
@@ -39,7 +43,7 @@ function App() {
         <Route path="/About" element={<About />} />
         <Route path="/Landingpage" element={<Landingpage />} />
         <Route path="/BusDetails" element={<BusDetails />} />
-        <Route path ="/AddBus" element={<AddBus/>}/>
+        <Route path ="/AddBus" element={role==="Admin"?<AddBus/>:<h2>you cant see this page</h2>}/>
         <Route path="/ImageSlider" element={<ImageSlider />} />
         <Route path="/Slide" element={<Slide />} />
         <Route path="/Contactus" element={<Contactus />} />
@@ -48,13 +52,19 @@ function App() {
         <Route path='/buslayout' element={<BusLayout/>}/>
         <Route path='/PaymentPage' element={<PaymentPage/>}/>
         <Route path='/Paymentsuccess' element={<Paymentsuccess/>}/>
-        <Route path='/BookingDetails' element={<BookingDetails/>}/>
-        <Route path='/BusDetailsCard' element={<BusDetailsCard/>}/>
-        <Route path='/UpdateForm/:busId' element={<UpdateForm />} />
+        <Route path='/BookingDetails' element={role==="Admin"?<BookingDetails/>:<h2>you cant see this page</h2>}/>
+        <Route path='/BusDetailsCard' element={role==="Admin"?<BusDetailsCard/>:<h2>you cant see this page</h2>}/>
+        <Route path='/UpdateForm/:busId' element={role==="Admin"?<UpdateForm />:<h2>you cant see this page</h2>} />
         <Route path='/AddBus' element={<AddBus/>}/>
-        {/* <Route path='/PdfDocument' element={<PdfDocument/>}/> */}
         <Route path='/bookings' element={<Booking/> }  />
         <Route path='/ImageComponent' element={<ImageComponent/> }  />
+        <Route path='/map' element={<GoogleMap/>}/>
+        <Route path='/receipt' element={<Receipts/>}/>
+        <Route path='/GoogleMap' element={<GoogleMap/>}/>
+        <Route path='/UpdatePasswordForm' element={<UpdatePasswordForm/>}/>
+        <Route path='/UserDetails' element={<UserDetails/>}/>
+
+
         
 
         

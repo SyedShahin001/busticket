@@ -101,8 +101,8 @@ const Navbar = () => {
                 
                 
                 <li className="nav-item">
-                  <Link to="/Landingpage" className="nav-link" style={{ color: 'white' }}>
-                    Home
+                  <Link to="/UserDetails" className="nav-link" style={{ color: 'white' }}>
+                    User
                   </Link>
                 </li>
                 {/* Add things here */}

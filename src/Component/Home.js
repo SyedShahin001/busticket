@@ -1,6 +1,6 @@
 // Home.js
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Home.css'; // Import the CSS file
 import { IoBusOutline } from "react-icons/io5";
@@ -15,7 +15,7 @@ const Home = () => {
   const [errorFields, setErrorFields] = useState([]);
 
   const navigate = useNavigate();
-
+ 
   const handleSearch = async () => {
     try {
       setLoading(true);
@@ -34,7 +34,7 @@ const Home = () => {
       }
   
       const response = await fetch(
-        `https://localhost:7127/api/Buses/Search?source=${from}&destination=${to}&date=${date}`
+        `http://localhost:88/api/Buses/Search?source=${from}&destination=${to}&date=${date}`
       );
   
       if (!response.ok) {

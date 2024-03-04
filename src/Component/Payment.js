@@ -48,7 +48,7 @@ const PaymentPage = () => {
 
 
   const handleProceedToPay = async () => {
-    const apiUrl = 'https://localhost:7127/api/Bookings';
+    const apiUrl = 'http://localhost:88/api/Bookings';
     const currentDateTime = new Date().toISOString();
 
     const requestBody = {
@@ -68,9 +68,15 @@ const PaymentPage = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(requestBody),
+        
       });
 
       if (response.ok) {
+        const booking=await response.json();
+        console.log(requestBody);
+        console.log("resp",booking); 
+        
+        localStorage.setItem("bookingId",booking.bookingId);
         setShow(true);
       } else {
         console.error('Failed to create booking. Please try again.');
@@ -83,7 +89,7 @@ const PaymentPage = () => {
   useEffect(() => {
     if (success) {
       alert('Payment successful!!');
-      console.log('Order successful. Your order id is--', orderID);
+      //console.log('Order successful. Your order id is--', orderID);
       navigate('/Paymentsuccess');
       const serviceId = "service_navsav5";
       const templateId = "template_n68mdz9";

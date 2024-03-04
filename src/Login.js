@@ -13,6 +13,7 @@ import {
   MDBCardBody,
   MDBInput,
 } from 'mdb-react-ui-kit';
+//import UpdatePasswordForm from './Password/UpdatePasswordForm';
 
 function LoginForm() {
   const [email, setemail] = useState('');
@@ -30,9 +31,9 @@ function LoginForm() {
    
     const encodedpassword = encodeURIComponent(password);
 
-    useEffect(()=>{
-      fetchData();
-    })
+    // useEffect(()=>{
+    //   fetchData();
+    // })
  
     async function login() {
       localStorage.setItem('email', email);
@@ -44,7 +45,7 @@ function LoginForm() {
  
       try {
         let item = { email, password };
-        let result = await fetch(`https://localhost:7127/api/Login?email=${email}&password=${encodeURIComponent(password)}`, {
+        let result = await fetch(`http://localhost:88/api/LoginControllerTest?email=${email}&password=${encodedpassword}`, {
           method: 'POST',
           headers: {
             Accept: 'application/json',
@@ -63,8 +64,8 @@ function LoginForm() {
         console.log(isLoggedIn);
        
         let item2 = { email, password };
-        let result1 = await fetch(`https://localhost:7127/api/Login/GetName?email=${email}&password=${encodedpassword}
-        `, {
+        let result1 = await fetch(`http://localhost:88/api/LoginControllerTest/GetName?email=${email}&password=${encodedpassword}`,
+         {
           method: 'POST',
           headers: {
             Accept: 'application/json',
@@ -84,8 +85,11 @@ function LoginForm() {
         if (result.title !== 'Unauthorized' && result.status!==400) {
           localStorage.setItem('r',"Authorized");
           setisLoggedIn(true);
-         
+          
+         if(email!="shahin@gmail.com")
           navigate('/Landingpage');
+        else 
+        navigate('/UserDetails')
           window.location.reload(); 
           
           setLoggedIn(true);
@@ -128,7 +132,7 @@ function LoginForm() {
  
     // const fetchData = async () => {
      
-    //   const response = await fetch(`https://localhost:7131/api/Signup/GetSignupIdByEmail?email=${email}`,{
+    //   const response = await fetch(`http://localhost:88/api/Signup/GetSignupIdByEmail?email=${email}`,{
        
     //   });
     //   const jsonData = await response.json();
@@ -138,23 +142,7 @@ function LoginForm() {
      
  
     // };
-    const fetchData = async () => {
-      try{
-      const response = await fetch(`https://localhost:7127/api/Signups/GetIdbyEmail?email=${email}`,{
-       
-      });
-      const jsonData = await response.json();
-      console.log(jsonData);
-      localStorage.setItem("CustomerId",jsonData)
-    }
-    catch(error)
-    {
-      console.log(error);
-    }
-     
-     
  
-    };
     function validate() {
       try {
         if (password === '') {
@@ -259,6 +247,11 @@ theme="dark"
               <p className='text-center mt-4'>
                 New User? <a href='/Signup'>Create Account</a>
               </p>
+
+              <p className='text-center mt-4'>
+               not Remember your password <a href='/UpdatePasswordForm'>Forget Password</a>
+              </p>
+            
               <ToastContainer />
             </MDBCardBody>
           </MDBCard>

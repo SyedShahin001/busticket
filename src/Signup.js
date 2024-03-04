@@ -98,7 +98,7 @@ function Signup() {
 
     try {
       let item = { ...state };
-      let result = await fetch('https://localhost:7127/api/Signups', {
+      let result = await fetch('http://localhost:88/api/Signups', {
         method: 'POST',
         body: JSON.stringify(item),
         headers: {
